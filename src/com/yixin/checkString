@@ -1,0 +1,86 @@
+package com.yixin;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test {
+
+    public static void main(String[] args) throws IOException {
+
+        List<List<String>> listss = null;
+        Test ts = new Test();
+
+        List<String> list = new ArrayList<>();
+        String[] strArray = {"eat", "tea", "eta", "tan", "bat", "atn", "tba", "cef", "kdn", "kfa", "fec"};
+        for (String string : strArray) {
+            list.add(string);
+        }
+        listss = ts.test(ts, list);
+        System.out.println(listss);
+    }
+
+    public List<List<String>> test(Test ts, List<String> strArray) {
+        List<List<String>> listsss = new ArrayList<>();
+        // 将数组遍历，取值
+        //取到每一组值 去看包含内容是否相同
+        for (int i = 0; i < strArray.size() - 1; ) {
+            listsss = ts.checkArray(listsss, strArray.get(i), strArray.get(i + 1), strArray, i + 1);
+        }
+        return listsss;
+    }
+
+    public List<List<String>> checkArray(List<List<String>> endList, String s, String s1, List<String> strArray, int p) {
+        List<Character> listChar = new ArrayList<Character>();
+        //将每个字符串转换成字符 ，来判断字符是否相同
+        char[] chars = s.toCharArray();
+        char[] chars1 = s1.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            listChar.add(chars[i]);
+        }
+        //结果集合为空的时候直接将数组添加进去
+        if (endList.size() == 0) {
+            List<String> list = new ArrayList<>();
+            list.add(s);
+            endList.add(list);
+        }
+        //定义标志位，用来判断在与之前每组校验如果与之前都没有相同值则设置为true用来新建集合存储数据
+        boolean flag = false;
+        //遍历以区分的数据值，只需要取集合中每个小集合中的一组数据用来判断是否相同即可
+        for (int k = 0; k < endList.size(); k++) {
+            List<String> endls = endList.get(k);
+            flag = true;
+            List<Character> listChar1111 = new ArrayList<Character>();
+            char[] endChars = endls.get(0).toCharArray();
+            //转换字符
+            for (char charsss : endChars) {
+                listChar1111.add(charsss);
+            }
+            //校验后续的字符串是否与以区分出来的数据相同，一样的字符及去除掉，然后与0比较
+            for (int j = 0; j < chars1.length; j++) {
+                if (listChar1111.contains(chars1[j])) {
+                    int a = listChar1111.indexOf(chars1[j]);
+                    listChar1111.remove(a);
+                }
+            }
+            //说明是有相同的数据，然后存在一直的数据中，将要求的字符数据去掉一存储的字符串数据
+            if (listChar1111.size() == 0) {
+                endls.add(s1);
+                strArray.remove(p);
+                flag = false;
+                break;
+            }
+        }
+        //如果在这之前都没有相同的数据，则新建集合存在最终集合中
+        if (flag) {
+            List<String> list2 = new ArrayList<>();
+            list2.add(s1);
+            strArray.remove(p);
+            endList.add(list2);
+        }
+        return endList;
+    }
+}
