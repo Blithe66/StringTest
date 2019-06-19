@@ -15,7 +15,7 @@ public class Test {
         Test ts = new Test();
 
         List<String> list = new ArrayList<>();
-        String[] strArray = {"eat", "tea", "eta", "tan", "bat", "atn", "tba", "cef", "kdn", "kfa", "fec"};
+        String[] strArray = {"eat", "teat", "eta", "tan", "bat", "atn", "tbaab", "cef", "kdn", "kfa", "fec"};
         for (String string : strArray) {
             list.add(string);
         }
@@ -59,15 +59,20 @@ public class Test {
             for (char charsss : endChars) {
                 listChar1111.add(charsss);
             }
+            //将需要校验的字符数组转成集合
+            List<Character> listChar11112222 = new ArrayList<Character>();
+            for (char charsss11 : chars1) {
+                listChar11112222.add(charsss11);
+            }
             //校验后续的字符串是否与以区分出来的数据相同，一样的字符及去除掉，然后与0比较
-            for (int j = 0; j < chars1.length; j++) {
-                if (listChar1111.contains(chars1[j])) {
-                    int a = listChar1111.indexOf(chars1[j]);
-                    listChar1111.remove(a);
+            for (int j = 0; j < listChar1111.size(); j++) {
+                if (listChar11112222.contains(listChar1111.get(j))) {
+                    int a = listChar11112222.indexOf(listChar1111.get(j));
+                    listChar11112222.remove(a);
                 }
             }
             //说明是有相同的数据，然后存在一直的数据中，将要求的字符数据去掉一存储的字符串数据
-            if (listChar1111.size() == 0) {
+            if (listChar11112222.size() == 0) {
                 endls.add(s1);
                 strArray.remove(p);
                 flag = false;
